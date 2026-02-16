@@ -1,11 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Честит рожден ден, Ида</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg1: #fff1f6;
+            --bg2: #ffe4f0;
+            --card: #ffffff;
+            --border: #ffd1e3;
+            --text: #3a1b2b;
+            --muted: #7a3a57;
+            --accent: #ff4d9a;
+            --accent2: #ff7bb6;
+            --shadow: 0 12px 32px rgba(255, 77, 154, .18);
+            --radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            /* centers gate/content */
+            padding: 20px;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(1200px 600px at 20% 10%, var(--bg2), transparent 60%),
+                radial-gradient(1000px 500px at 80% 30%, #ffd6ea, transparent 60%),
+                linear-gradient(180deg, var(--bg1), #ffffff);
+        }
+
+        #gate,
+        #content {
+            width: min(520px, 92vw);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: clamp(18px, 4vw, 28px);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(22px, 4.8vw, 30px);
+            line-height: 1.15;
+        }
+
+        p {
+            margin: 0 0 14px;
+            font-size: clamp(14px, 3.6vw, 16px);
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(255, 77, 154, .15);
+        }
+
+        button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 12px 14px;
+            border: 0;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            box-shadow: 0 10px 18px rgba(255, 77, 154, .22);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .hint {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center;
+            opacity: .9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .bday-btn {
+            width: 100%;
+            padding: 14px 16px;
+            border: 0;
+            border-radius: 16px;
+            font-size: clamp(16px, 4.2vw, 30px);
+            font-weight: 400;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            box-shadow: 0 14px 24px rgba(255, 77, 154, .22);
+        }
+
+        .balloons-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 9999;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -120px;
+            width: clamp(34px, 7vw, 56px);
+            height: clamp(46px, 9vw, 72px);
+            border-radius: 50% 50% 48% 48%;
+            opacity: .95;
+            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, .12));
+            animation: rise var(--dur) ease-in forwards;
+        }
+
+        .balloon::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 12px;
+            height: 14px;
+            transform: translateX(-50%) rotate(45deg);
+            background: inherit;
+            border-radius: 3px;
+            opacity: .95;
+        }
+
+        .string {
+            position: absolute;
+            left: 50%;
+            bottom: -70px;
+            width: 2px;
+            height: 70px;
+            transform: translateX(-50%);
+            background: rgba(122, 58, 87, .35);
+            border-radius: 2px;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) rotate(var(--rot));
+            }
+
+            100% {
+                transform: translateY(calc(-100vh - 220px)) rotate(calc(var(--rot) * -1));
+                opacity: 0;
+            }
+        }
+
+        body {
+            font-family: 'Quicksand', system-ui, sans-serif;
+        }
+
+        h1,
+        .bday-btn {
+            font-family: 'Pacifico', cursive;
+            letter-spacing: .5px;
+        }
+
+        p,
+        input,
+        button,
+        .hint {
+            font-family: 'Quicksand', sans-serif;
+        }
+        
+    #unicorn{
+    position:fixed;
+    left:0;
+    bottom:10px;
+    font-size:clamp(34px, 6vw, 56px);
+    z-index:9998;
+    cursor:pointer;
+    user-select:none;
+    transform: translateX(0) scaleX(1) scale(1);
+    transition: transform 140ms ease, font-size 140ms ease;
+    will-change: transform, left;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,.14));
+    pointer-events:auto; /* allow hover */
+  }
+  #unicorn:hover{
+    transform: translateX(-50%) scaleX(var(--face, 1)) scale(1.25);
+  }
+
+  .unicorn-wave{
+    position:fixed;
+    left:-80px;
+    bottom:12px;
+    font-size:clamp(22px, 4.2vw, 38px);
+    z-index:9996;
+    pointer-events:none;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,.14));
+    animation: unicornWave 2200ms ease-in-out forwards;
+  }
+
+  @keyframes unicornWave{
+    0%   { transform: translateX(0) translateY(0) scale(1); opacity:0; }
+    10%  { opacity:1; }
+    50%  { transform: translateX(calc(50vw + 60px)) translateY(-10px) scale(1.03); }
+    100% { transform: translateX(calc(110vw + 140px)) translateY(0) scale(1); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    #unicorn{ transition:none; }
+    .unicorn-wave{ animation:none; display:none; }
+  }
+
+   #rainbow-canvas{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9997;
+  }
+    </style>
 </head>
+
 <body>
-    Тест
+    <div id="gate">
+        <h1>🎁 Една малка изненада…</h1>
+        <p>Кажи приятел и влез</p>
+        <input id="pw" type="password" placeholder="Паролката" autocomplete="off" />
+        <button id="btn">Влез ✨</button>
+        <!-- <div class="hint">"приятел"</div> -->
+    </div>
+    <div id="content" class="hidden">
+        <button id="bdayBtn" class="bday-btn">Честит рожден ден, Ида 🎀</button>
+        <button id="danceBtn" class="dance-btn">
+            Искаш ли да танцуваме? 💃
+        </button>
+    </div>
+    <div id="unicorn" aria-hidden="true">🦄</div>
+    <canvas id="rainbow-canvas"></canvas>
+
+    <div id="wakaPlayer" style="position:fixed; left:-9999px; top:-9999px; width:1px; height:1px;"></div>
+
+<script>
+(() => {
+  // Load YouTube IFrame API once
+  if (!document.getElementById("yt-iframe-api")) {
+    const tag = document.createElement("script");
+    tag.id = "yt-iframe-api";
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  }
+
+  let player = null;
+  let ready = false;
+  let playing = false;
+
+  // Create player when API is ready
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("wakaPlayer", {
+      width: 1,
+      height: 1,
+      videoId: "czWcyZRAMtk",
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        mute: 0,
+        modestbranding: 1,
+        rel: 0,
+        playsinline: 1
+      },
+      events: {
+        onReady: function () {
+          ready = true;
+        }
+      }
+    });
+  };
+
+  const danceBtn = document.getElementById("danceBtn");
+
+  danceBtn.addEventListener("click", () => {
+    if (!ready || !player) {
+      alert("Зареждам музиката… натисни пак 🙂");
+      return;
+    }
+
+    if (!playing) {
+      // Some browsers require explicit user gesture (this click is one)
+      player.playVideo();
+      playing = true;
+      danceBtn.textContent = "Спираме ли? ⏸️";
+    } else {
+      player.pauseVideo();
+      playing = false;
+      danceBtn.textContent = "Искаш ли да танцуваме? 💃";
+    }
+  });
+})();
+</script>
 </body>
+
+
+
+<script>
+    const PASSWORD = "mellon";
+
+    const gate = document.getElementById("gate");
+    const content = document.getElementById("content");
+    const pw = document.getElementById("pw");
+    const btn = document.getElementById("btn");
+
+    function unlock() {
+        if (pw.value === PASSWORD) {
+            sessionStorage.setItem("unlocked", "1");
+            gate.classList.add("hidden");
+            content.classList.remove("hidden");
+        } else {
+            pw.value = "";
+            pw.focus();
+            alert("Опа, кой не е ходил до Мория скоро? 🙂");
+        }
+    }
+
+    btn.addEventListener("click", unlock);
+    pw.addEventListener("keydown", (e) => { if (e.key === "Enter") unlock(); });
+
+    //Baloni
+    const bdayBtn = document.getElementById("bdayBtn");
+
+    function spawnBalloons(count = 18) {
+        const layer = document.createElement("div");
+        layer.className = "balloons-layer";
+        document.body.appendChild(layer);
+
+        const colors = [
+            "#ff4d9a", "#ff7bb6", "#ffb3d1",
+            "#ffd1e3", "#ff5fa6", "#ff9ac7"
+        ];
+
+        for (let i = 0; i < count; i++) {
+            const balloon = document.createElement("div");
+            balloon.className = "balloon";
+
+            const left = Math.random() * 100;                 // vw
+            const dur = 2800 + Math.random() * 2200;          // ms
+            const delay = Math.random() * 700;                // ms
+            const rot = (-10 + Math.random() * 20).toFixed(1) + "deg";
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            balloon.style.left = left + "vw";
+            balloon.style.background = color;
+            balloon.style.setProperty("--dur", dur + "ms");
+            balloon.style.animationDelay = delay + "ms";
+            balloon.style.setProperty("--rot", rot);
+
+            const string = document.createElement("div");
+            string.className = "string";
+            balloon.appendChild(string);
+
+            layer.appendChild(balloon);
+
+            balloon.addEventListener("animationend", () => balloon.remove());
+        }
+
+        setTimeout(() => layer.remove(), 6000);
+    }
+
+    bdayBtn.addEventListener("click", () => spawnBalloons(22));
+
+    //Ednorog
+    (() => {
+  const unicorn = document.getElementById("unicorn");
+
+  let targetX = window.innerWidth * 0.5;
+  let currentX = targetX;
+
+  function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+  window.addEventListener("mousemove", (e) => {
+    targetX = e.clientX;
+  }, { passive:true });
+
+  function tick(){
+    currentX += (targetX - currentX) * 0.08;
+
+    const pad = 24;
+    const x = clamp(currentX, pad, window.innerWidth - pad);
+
+    const dir = (targetX - currentX) >= 0 ? 1 : -1;
+    unicorn.style.setProperty("--face", dir);
+
+    unicorn.style.left = x + "px";
+    unicorn.style.transform = `translateX(-50%) scaleX(${dir}) scale(1)`;
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  let waveCooldown = false;
+
+  function spawnWave(){
+    if (waveCooldown) return;
+    waveCooldown = true;
+
+    const count = 10;
+    for (let i = 0; i < count; i++) {
+      const u = document.createElement("div");
+      u.className = "unicorn-wave";
+      u.textContent = "🦄";
+      u.style.animationDelay = (i * 90) + "ms";
+      u.style.bottom = (10 + Math.sin(i * 0.55) * 12) + "px";
+      u.style.fontSize = `clamp(20px, ${3.6 + (i%3)*0.4}vw, 40px)`;
+      document.body.appendChild(u);
+      u.addEventListener("animationend", () => u.remove());
+    }
+
+    setTimeout(() => { waveCooldown = false; }, 900);
+  }
+
+  unicorn.addEventListener("mouseenter", spawnWave);
+})();
+
+  //Rainbow
+  
+(() => {
+  const canvas = document.getElementById("rainbow-canvas");
+  const ctx = canvas.getContext("2d");
+
+  function resize(){
+    canvas.width = window.innerWidth * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+
+  const rainbow = ["#ff0000","#ff7f00","#ffff00","#00ff00","#0000ff","#4b0082","#9400d3"];
+
+  let points = [];
+  const maxLen = 90;
+
+  let mx = window.innerWidth / 2;
+  let my = window.innerHeight / 2;
+  let vx = mx;
+  let vy = my;
+
+  // IMPORTANT: inside the IIFE => no temporal dead zone collisions
+  let lastMove = performance.now();
+  let fade = 0;
+
+  function addPoint(x,y){
+    points.unshift({ x, y });
+    if (points.length > maxLen) points.pop();
+  }
+
+  function tick(){
+    const now = performance.now();
+    const moving = (now - lastMove) < 120;
+
+    fade += (((moving ? 1 : 0) - fade) * 0.12);
+    fade = Math.max(0, Math.min(1, fade));
+
+    vx += (mx - vx) * 0.35;
+    vy += (my - vy) * 0.35;
+
+    if (fade > 0.02) addPoint(vx, vy);
+    if (!moving && points.length) points.pop();
+
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+    if (points.length > 2 && fade > 0.01) {
+      ctx.globalAlpha = 0.9 * fade;
+
+      for (let r = 0; r < rainbow.length; r++) {
+        const bandOffset = (r - 3) * 3;
+        const baseWidth = 7 - r * 0.5;
+
+        for (let i = 0; i < points.length - 1; i++) {
+          const p = points[i];
+          const next = points[i + 1];
+
+          const taper = 1 - (i / points.length);
+          ctx.strokeStyle = rainbow[r];
+          ctx.lineWidth = Math.max(1, baseWidth * taper);
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y + bandOffset);
+          ctx.lineTo(next.x, next.y + bandOffset);
+          ctx.stroke();
+        }
+      }
+
+      ctx.globalAlpha = 1;
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener("mousemove", (e) => {
+    mx = e.clientX;
+    my = e.clientY;
+    lastMove = performance.now();
+
+    if (fade < 0.05) {
+      points = [];
+      vx = mx;
+      vy = my;
+    }
+  }, { passive:true });
+
+  window.addEventListener("resize", resize);
+
+  resize();
+  requestAnimationFrame(tick);
+})();
+</script>
+
+
+
 </html>
