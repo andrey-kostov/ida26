@@ -441,6 +441,58 @@
   unicorn.addEventListener("mouseenter", spawnWave);
 })();
 
+(() => {
+  const unicorn = document.getElementById("unicorn");
+
+  // Only activate on mobile devices
+  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if (!isMobile) return;
+
+  let currentX = window.innerWidth / 2;
+  let targetX = currentX;
+
+  function clamp(v, min, max){ 
+    return Math.max(min, Math.min(max, v)); 
+  }
+
+  // iOS 13+ requires permission
+  function enableMotion(){
+    if (typeof DeviceOrientationEvent !== "undefined" &&
+        typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission().catch(() => {});
+    }
+  }
+
+  document.addEventListener("click", enableMotion, { once:true });
+
+  window.addEventListener("deviceorientation", (event) => {
+    if (event.gamma === null) return;
+
+    // gamma is tilt left/right (-90 to 90)
+    const tilt = event.gamma;
+
+    // map tilt to screen width
+    const percent = (tilt + 45) / 90; // normalize
+    targetX = percent * window.innerWidth;
+  });
+
+  function tick(){
+    currentX += (targetX - currentX) * 0.12;
+
+    const pad = 24;
+    const x = clamp(currentX, pad, window.innerWidth - pad);
+
+    const dir = (targetX - currentX) >= 0 ? 1 : -1;
+    unicorn.style.setProperty("--face", dir);
+    unicorn.style.left = x + "px";
+    unicorn.style.transform = `translateX(-50%) scaleX(${dir}) scale(1)`;
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
+})();
+
   //Rainbow
   
 (() => {
